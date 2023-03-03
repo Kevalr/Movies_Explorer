@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keval Movies</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div id="page-container" class="container-fluid">
+      <nav
+        class="navbar bg-dark navbar-expand-sm bg-body-tertiary"
+        data-bs-theme="dark"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand active" href="#" id="homeButton"
+            >Keval Movies</a
+          >
+          <button
+            class="navbar-toggler collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Genere
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item fetchByGenere" href="#">Action</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item fetchByGenere" href="#"
+                      >Adventure</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item fetchByGenere" href="#">Comedy</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item fetchByGenere" href="#">Romance</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item fetchByGenere" href="#">Crime</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item fetchByGenere" href="#">Family</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="#"
+                  id="showFavouriteMoviesButton"
+                  >Favourites</a
+                >
+              </li>
+            </ul>
+            <form class="d-flex" role="search" id="search-bar">
+              <input
+                class="form-control me-2"
+                id="movieSearchInput"
+                type="search"
+                placeholder="Search Movie..."
+                aria-label="Search"
+              />
+              <table id="movieDisplayTable"></table>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <main id="movies-container">
+        <div class="spinner spinner-border" role="status"></div>
+        <!-- <div class="homePageMovieCard">
+        <img class="homePageMovieCardImage"
+          src="https://m.media-amazon.com/images/M/MV5BMGNhNzRlNDctMWY3Yi00MjZjLWFmZmEtOGEzZjUyNWFlY2YwXkEyXkFqcGdeQXVyNDIyMTUwNTQ@._V1_SX300.jpg">
+
+        <div class="homePageMovieCardContent">
+          <div class="homePage-movieCard-data">
+            <div class="homePage-movieCard-title">lor sit ipsum dolor sit amet
+            </div>
+            <div class="homePage-movieCard-releaseDate">3 october 2019</div>
+          </div>
+          <div class="homePage-movieCard-buttons">
+            <button type="button" class="btn btn-light more-button" id="movieDetailsButton">Details
+            </button>
+            <button type="button" class="btn btn-warning more-button mt-2" id="favouriteButton">Add to
+              favourites
+            </button>
+          </div>
+        </div>
+      </div>
+ -->
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+body {
+  background-color: rgb(43, 48, 53);
+  /* background-color: black; */
+}
+#page-container {
+  /* background-color: rgb(43, 48, 53); */
+  font-size: 18px;
+  position: relative;
+  height: 100vh;
+  width: 90%;
+  margin: auto;
+}
+
+/* Navbar Styling */
+/* Navbar container */
+nav {
+  width: 100%;
+  margin: auto;
+  border-bottom: 1px solid rgba(105, 105, 105, 0.3);
+  /* background-color: white; */
+  position: sticky !important;
+  top: 0px;
+  z-index: 5 !important;
+}
+
+/* overriding default color */
+.navbar-toggler {
+  background-color: rgb(226, 226, 226);
+}
+
+/* overriding default fontsize as per project need */
+.navbar-brand {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.nav-item {
+  font-size: 1rem;
+}
+
+/* Navbar search box styling */
+#search-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  margin-right: 50px;
+}
+
+#movieSearchInput {
+    width: 200px;
+}
+
+/* searchbox result list styling */
+#movieDisplayTable {
+  width: 100%;
+  box-shadow: 0px 0px 15px rgb(13, 13, 13);
+  border-radius: 5px;
+  position: absolute;
+  top: 110%;
+  left: -1%;
+  visibility: visible;
+}
+
+#movieDisplayTable tr {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  color: black;
+  border-bottom: 1px solid rgb(128, 128, 128);
+  background-color: rgb(236, 236, 236);
+  border-radius: 5px;
+  color: black;
+  margin: 2px;
+}
+
+#movieDisplayTable tr .movie-img {
+  height: 50px;
+  width: 50px;
+}
+
+.movie-title {
+  width: 65%;
+  font-size: 15px;
+}
+
+.favourites-button {
+  height: 50px;
+  width: fit-content;
+  display: flex;
+  align-items:  center;
+  justify-content: center;
+  padding: 3px;
+}
+
+.favourites-button img {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 750px) {
+  #page-container {
+    width: 100%;
+  }
+}
+
+main {
+  /* background-color: rgb(247, 247, 252); */
+  width: 100%;
+  display: flex;
+  margin: auto;
+  /* padding: 200px auto; */
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 85%;
+}
+
+.homePageMovieCard {
+  position: relative;
+  width: 270px;
+  height: 350px;
+  background-color: rgb(223, 221, 221);
+  border-radius: 10px;
+  box-shadow: 0 0 7px white;
+  margin: 20px;
+  overflow: hidden;
+  color: black;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.homePageMovieCardImage {
+  height: 100%;
+  width: 100%;
+  opacity: 0.3;
+  transition: scale .5s;
+}
+
+
+.homePageMovieCardContent {
+  position: absolute;
+  top: 0%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.homePage-movieCard-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80%;
+}
+
+.homePage-movieCard-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.homePage-movieCard-releaseDate {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: brown;
+}
+
+.homePage-movieCard-buttons {
+  position: sticky;
+  bottom: 15px;
+}
+
+.homePage-movieCard-buttons button{
+  width: 90%;
+  font-weight: 500;
+}
+
+.spinner {
+  width: 3rem; 
+  height: 3rem; 
+  color:white;
+  display: block;
+}
+/* .homePage-movieCard-detailsButton {
+
+}
+
+.homePage-movieCard-favouritesButton {
+
+} */
+/* 
+
+#main-content {
+  width: 90%;
+  min-height: 70vh;
+  margin: 10px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#main-content .card {
+  width: 20rem;
+  margin: 25px;
+  height: 25rem;
+  cursor: context-menu;
+
+   background-size: cover;
+    background-position: center; 
+}
+
+#main-content .card img {
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+}
+
+#main-content div.card .content {
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  margin: auto 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
+}
+
+.card .card-add-to-favourites-button {
+  position: absolute;
+  top: 10px;
+  right: -5%;
+  width: 35px;
+  cursor: pointer;
+   align-self: flex-end;
+    justify-self: flex-start; 
+}
+
+.card .card-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 27px;
+  color: black;
+}
+
+.card .movie-year {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 5px 0px;
+  color: rgb(144, 86, 0);
+}
+
+.card .more-button {
+  width: 80%;
+  float: left;
+}
+
+.active {
+  color: black;
+  font-weight: bold;
+} */
