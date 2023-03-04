@@ -128,14 +128,14 @@ async function createSearchResultMovieFavouriteButton(imdbID, movieDetails) {
     favoriteButton.setAttribute('src', 'images/add-to-favourite.png');
   }
 
-  favoriteButton.addEventListener('click', (e) => {
+  favoriteButton.addEventListener('click', async (e) => {
     //fetching the image name
     let imageName = e.target.src.split('/');
     imageName = imageName[imageName.length - 1];
 
     //depend on name add/remove from the list and changing image sources
     if (imageName === "add-to-favourite.png") {
-      addIntoFavouriteList(imdbID);
+      await addIntoFavouriteList(imdbID);
       e.target.src = 'images/favourite.png';
       //Adding movie Into Favourites Page 
       (displayedScreen === 'favouritesPage') && addMovieCardIntoDocument(movieDetails);
@@ -224,10 +224,15 @@ showFavouriteMoviesButton.addEventListener('click', () => {
 async function setFavouritesMovies() {
   let favouriteMoviesIdList = await fetchFavouritesList();
 
-  for (let i = 0; i < favouriteMoviesIdList.length; i++) {
-    let result = await fetchMovieDetails(favouriteMoviesIdList[i]);
-    addMovieCardIntoDocument(result)
-  }
+  if( favouriteMoviesIdList.length > 0 ) {
+    for (let i = 0; i < favouriteMoviesIdList.length; i++) {
+      let result = await fetchMovieDetails(favouriteMoviesIdList[i]);
+      addMovieCardIntoDocument(result)
+    }
+  } else {
+    alert('No Movies Present in Favourites List, Please go to Home Page');
+    hideSpinner();
+  } 
 }
 //-------------------------- favourites page Functions ENDS -----------------
 
