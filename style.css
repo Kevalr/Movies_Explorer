@@ -1,9 +1,7 @@
 body {
   background-color: rgb(43, 48, 53);
-  /* background-color: black; */
 }
 #page-container {
-  /* background-color: rgb(43, 48, 53); */
   font-size: 18px;
   position: relative;
   height: 100vh;
@@ -11,13 +9,12 @@ body {
   margin: auto;
 }
 
-/* Navbar Styling */
+/* ------------ Navbar Styling --------------*/
 /* Navbar container */
 nav {
   width: 100%;
   margin: auto;
   border-bottom: 1px solid rgba(105, 105, 105, 0.3);
-  /* background-color: white; */
   position: sticky !important;
   top: 0px;
   z-index: 5 !important;
@@ -29,11 +26,12 @@ nav {
 }
 
 /* overriding default fontsize as per project need */
+/* -------------Title ------------- */
 .navbar-brand {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
+/* -------------Nsvigation-links ------------- */
 .nav-item {
   font-size: 1rem;
 }
@@ -62,8 +60,10 @@ nav {
   top: 110%;
   left: -1%;
   visibility: visible;
+  z-index: 5;
 }
 
+/* -------------Search Result Table Styling ------------- */
 #movieDisplayTable tr {
   height: fit-content;
   display: flex;
@@ -76,16 +76,19 @@ nav {
   margin: 2px;
 }
 
+/* ---------movie image in the serch result */
 #movieDisplayTable tr .movie-img {
   height: 50px;
   width: 50px;
 }
 
+/* ---------movie Title in the serch result */
 .movie-title {
   width: 65%;
   font-size: 15px;
 }
 
+/* ----------- movie search result favourite buttpn */
 .favourites-button {
   height: 50px;
   width: fit-content;
@@ -101,24 +104,26 @@ nav {
   cursor: pointer;
 }
 
+/* ---------- Full width for small devices */
 @media screen and (max-width: 750px) {
   #page-container {
     width: 100%;
   }
 }
 
+
+/* -------------Main Section ------------- */
 main {
-  /* background-color: rgb(247, 247, 252); */
   width: 100%;
   display: flex;
   margin: auto;
-  /* padding: 200px auto; */
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
   min-height: 85%;
 }
 
+/* -------------Indivisual Movie  Cards------------- */
 .homePageMovieCard {
   position: relative;
   width: 270px;
@@ -133,6 +138,7 @@ main {
   font-family: 'Courier New', Courier, monospace;
 }
 
+/* Card Background Image */
 .homePageMovieCardImage {
   height: 100%;
   width: 100%;
@@ -140,7 +146,7 @@ main {
   transition: scale .5s;
 }
 
-
+/* Card Content Container*/
 .homePageMovieCardContent {
   position: absolute;
   top: 0%;
@@ -151,6 +157,7 @@ main {
   align-items: center; 
 }
 
+/* Card Data */
 .homePage-movieCard-data {
   display: flex;
   flex-direction: column;
@@ -170,6 +177,7 @@ main {
   color: brown;
 }
 
+/* Card Buttons */
 .homePage-movieCard-buttons {
   position: sticky;
   bottom: 15px;
@@ -177,94 +185,13 @@ main {
 
 .homePage-movieCard-buttons button{
   width: 90%;
-  font-weight: 500;
+  font-weight: 600;
 }
 
+/* -------------Spinner Styling ------------- */
 .spinner {
   width: 3rem; 
   height: 3rem; 
   color:white;
   display: block;
 }
-/* .homePage-movieCard-detailsButton {
-
-}
-
-.homePage-movieCard-favouritesButton {
-
-} */
-/* 
-
-#main-content {
-  width: 90%;
-  min-height: 70vh;
-  margin: 10px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-}
-
-#main-content .card {
-  width: 20rem;
-  margin: 25px;
-  height: 25rem;
-  cursor: context-menu;
-
-   background-size: cover;
-    background-position: center; 
-}
-
-#main-content .card img {
-  height: 100%;
-  width: 100%;
-  opacity: 0.5;
-}
-
-#main-content div.card .content {
-  position: absolute;
-  width: 80%;
-  height: 100%;
-  margin: auto 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-transform: capitalize;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  text-align: center;
-}
-
-.card .card-add-to-favourites-button {
-  position: absolute;
-  top: 10px;
-  right: -5%;
-  width: 35px;
-  cursor: pointer;
-   align-self: flex-end;
-    justify-self: flex-start; 
-}
-
-.card .card-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  line-height: 27px;
-  color: black;
-}
-
-.card .movie-year {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin: 5px 0px;
-  color: rgb(144, 86, 0);
-}
-
-.card .more-button {
-  width: 80%;
-  float: left;
-}
-
-.active {
-  color: black;
-  font-weight: bold;
-} */

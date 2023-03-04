@@ -1,5 +1,9 @@
+// -------- For searching movies and fetching indivisual Movie Details
+//Two API is used because of daily limit of a API key Usage
 const OMDB_API_KEY = "d35e4f1f";
 const OMDB_API_KEY_SECOND = "a9a1037a";
+
+//For finding Popular Movies and Movies by genere
 const RAPID_API_KEY = {
   method: 'GET',
 	headers: {
@@ -8,11 +12,12 @@ const RAPID_API_KEY = {
 	}
 };
 
+//Variable to hold the Current Screen Name
 var displayedScreen = 'homePage';
 
 
-//Searching Functionality ------------------ STARTS --------------------
-//Search result display table
+//Searching Functionality ------------------ STARTS -------------------- ///////////////
+//Search result display table 
 const searchResultDisplay = document.getElementById("movieDisplayTable");
 const moviesDisplayContainer = document.getElementById('movies-container');
 
@@ -26,7 +31,7 @@ pageContainer.addEventListener('click', (e) => {
   }
 });
 
-//Search input box
+//Movie Search box
 const movieSearchInput = document.getElementById("movieSearchInput");
 movieSearchInput.addEventListener("input", (e) => {
   handleMovieSearch(e.target.value);
@@ -37,7 +42,7 @@ async function handleMovieSearch(movieName) {
   let movieList = await searchMovie(movieName);
   console.log(movieList);
 
-  //Resetting the table After Search
+  //Resetting the table for every Search
   searchResultDisplay.textContent = "";
 
   if (Boolean(movieList)) {
@@ -60,7 +65,7 @@ async function searchMovie(movieName) {
   return false;
 }
 
-//function for displaying the search result
+//----------- function for displaying the movie search result -----------------
 async function setSearchMovieResult(movieList) {
   //Creating and appeding row(card) for each movie in the search result table
   for (let i = 0; i < movieList.length; i++) {
@@ -152,13 +157,66 @@ async function createSearchResultMovieFavouriteButton(imdbID, movieDetails) {
   favouritesButtonContainer.appendChild(favoriteButton);
   return favouritesButtonContainer;
 }
-
 //function for creating search result movie card ----- ENDS ----------
 
-//Searching Functionality ------------------ ENDS --------------------
+
+//---------------------------Searching Functionality ------------------ ENDS --------------------
 
 
-//------------ favourites page data display ----- 
+//--------------Home Page Function Starts-------------
+var popularMovieIds = [];
+
+async function setPopularMoviesList() {
+  let result = await fetchPopularMovies();
+  popularMovieIds = result;
+  // console.log(popularMovieIds);
+  setHomePage();
+}
+
+//Fetching Movies For Home Page
+async function fetchPopularMovies() {
+  let result = [];
+  await fetch('https://moviesminidatabase.p.rapidapi.com/movie/order/byRating/', RAPID_API_KEY)
+	.then(response => response.json())
+	.then(response => result = response.results)
+	.catch(err => console.error(err));
+  // console.log(result);
+  let popularMovieIds = [];
+  for(let i = 0; i < result.length; i++) {
+    popularMovieIds.push(result[i].imdb_id);
+  }
+  // console.log('popular', popularMovieIds);
+  return popularMovieIds;
+}
+
+// calling this method each time to fetch Home Page data
+setPopularMoviesList();
+
+// ---------------- Home page Button ------------------
+let homePageButton = document.getElementById('homeButton');
+homePageButton.addEventListener('click', () => {
+  displayedScreen = 'homePage';
+  moviesDisplayContainer.textContent = '';
+  showSpinner();
+  setHomePage();
+})
+
+//Setting the Data into Home Page
+async function setHomePage() {
+  // console.log(popularMovieIds);
+  document.querySelector('#movies-container').textContent = '';
+  let start = Math.floor(Math.random() * 40);
+
+  for (let i = start; i < start+8; i++) {
+    console.log(popularMovieIds[i]);
+    let movieDetails = await fetchMovieDetails(popularMovieIds[i]);
+    addMovieCardIntoDocument(movieDetails);
+  }
+}
+
+//--------------Home Page Function ENDs-------------
+
+//-------------------------- favourites page Functions STARTS ----------------- 
 let showFavouriteMoviesButton = document.getElementById('showFavouriteMoviesButton');
 showFavouriteMoviesButton.addEventListener('click', () => {
   displayedScreen = 'favouritesPage';
@@ -169,95 +227,38 @@ showFavouriteMoviesButton.addEventListener('click', () => {
   setFavouritesMovies();
 })
 
+// Setting the Favourites Movies into the list
 async function setFavouritesMovies() {
-  // let favouriteMoviesDataList = [];
-  console.log('2')
   let favouriteMoviesIdList = await fetchFavouritesList();
 
   for (let i = 0; i < favouriteMoviesIdList.length; i++) {
     let result = await fetchMovieDetails(favouriteMoviesIdList[i]);
     addMovieCardIntoDocument(result)
-    // favouriteMoviesDataList.push(result);
   }
-  // setMoviesIntoDocument(favouriteMoviesDataList);
 }
+//-------------------------- favourites page Functions ENDS -----------------
 
-//--------------Home Page Function Starts-------------
-var popularMovieIds = [];
 
-async function setPopularMoviesList() {
-  // debugger
-  let result = await fetchPopularMovies();
-  popularMovieIds = result;
-  console.log(popularMovieIds);
-  setHomePage();
-}
-
-//Fetching Movies For Home Page
-async function fetchPopularMovies() {
-  debugger
-  let result = [];
-  await fetch('https://moviesminidatabase.p.rapidapi.com/movie/order/byRating/', RAPID_API_KEY)
-	.then(response => response.json())
-	.then(response => result = response.results)
-	.catch(err => console.error(err));
-  console.log('---------------------', result)
-  // console.log(result);
-  let popularMovieIds = [];
-  for(let i = 0; i < result.length; i++) {
-    popularMovieIds.push(result[i].imdb_id);
-  }
-  console.log('popular', popularMovieIds);
-  return popularMovieIds;
-}
-
-setPopularMoviesList();
-// console.log(popularMovieIds);
-
-let homePageButton = document.getElementById('homeButton');
-homePageButton.addEventListener('click', () => {
-  displayedScreen = 'homePage';
-  moviesDisplayContainer.textContent = '';
-  showSpinner();
-  setHomePage();
-})
-
-async function setHomePage() {
-  debugger;
-  console.log(popularMovieIds);
-  document.querySelector('#movies-container').textContent = '';
-  let start = Math.floor(Math.random() * 40);
-  let homePageMovies = [];
-  for (let i = start; i < start+8; i++) {
-    console.log(popularMovieIds[i]);
-    let movieDetails = await fetchMovieDetails(popularMovieIds[i]);
-    // homePageMovies.push(movieDetails);
-    addMovieCardIntoDocument(movieDetails);
-  }
-  // setMoviesIntoDocument(homePageMovies);
-}
-
+//-------------------------- Movie By Genere Feature - Functions STARTS -----------------
 let movieGenre = document.querySelectorAll('.fetchByGenere');
-// console.log(movieGenre);
+
+// Setting onclick event on each Movie Genere Option And Adding Functionalities on that
 for(let i = 0; i < movieGenre.length; i++) {
   // console.log(movieGenre[i]);
   let genere = movieGenre[i].textContent;
   movieGenre[i].addEventListener('click', async() => {
-    debugger;
     document.querySelector('#movies-container').textContent = '';
     showSpinner();
+
+
     let result = await fetchMovieByGenere(genere);
-    console.log(result);
+    // console.log(result);
     for(let i = 0; i < result.length; i++) {
       let movieDetails = await fetchMovieDetails(result[i]);
       addMovieCardIntoDocument(movieDetails);
     }
   })
 }
-
-// setActionMovies.addEventListener('click', async() => {
-//   let genere = 
-// })
 
 async function fetchMovieByGenere(genere) {
   let result = [];
@@ -273,8 +274,9 @@ async function fetchMovieByGenere(genere) {
   }
   return movideIdsByGenere;
 }
+//-------------------------- Movie By Genere Feature - Functions ENDS -----------------
 
-// ADDING Movies card into DOM Function -- STARTS -----------------
+// -------------------------ADDING Movies card into DOM Function -- STARTS -----------------
 function setMoviesIntoDocument(moviesList) {
   document.querySelector('#movies-container').textContent = '';
   console.log(moviesList);
@@ -347,7 +349,7 @@ function createMovieCardButton(imdbID) {
   container.classList.add('homePage-movieCard-buttons');
 
   let movieDetailsButton = document.createElement('button');
-  movieDetailsButton.classList.add('btn', 'btn-primary', 'more-button');
+  movieDetailsButton.classList.add('btn', 'btn-warning', 'more-button');
   movieDetailsButton.setAttribute('id', `${imdbID}`);
   movieDetailsButton.addEventListener('click', () => {
     showMovieDetails(imdbID);
@@ -389,16 +391,18 @@ function createMovieCardButton(imdbID) {
   container.append(movieDetailsButton, favouriteButton);
   return container;
 }
-// ADDING Movies card into DOM Function -- ENDS -----------------
+// ------------- ADDING Movies card into DOM Function -- ENDS -----------------
 
 
-//--------------Indivisual Movie Details page Starts-------------
+//--------------Function for setting Movie ids into storage for display Indivisual Movie Details ------------
 function showMovieDetails(imdbID) {
   console.log(imdbID);
   sessionStorage.setItem('movieIdToShowDetails', `${imdbID}`);
   window.open('movieDetails.html');
 }
 
+// -------------------------- Helper function ----------------------------- //
+// Function for Fetching Movie Details
 async function fetchMovieDetails(imdbID) {
   let url = `https://omdbapi.com/?i=${imdbID}&apikey=${OMDB_API_KEY_SECOND}`
   let result;
@@ -409,11 +413,7 @@ async function fetchMovieDetails(imdbID) {
   return result;
 }
 
-
-//--------------Indivisual Movie Details page Ends-------------
-
-
-// -------------------------- Helper function ----------------------------- //
+// Function for Fetching Movie Details
 function fetchFavouritesList() {
   let favouritesList = [];
   let result = localStorage.getItem('favouritesList');
@@ -423,28 +423,33 @@ function fetchFavouritesList() {
   return favouritesList;
 }
 
+// Function for Cheking If movie already Present in the favorites list or not
 function isPresentInFavouritesList(imdbID) {
   let favouritesList = fetchFavouritesList();
   let result = favouritesList.find(element => element === imdbID);
   return Boolean(result);
 }
 
+// Function for Adding Movie Into Favourites list
 async function addIntoFavouriteList(imdbID) {
   let favouritesList = await fetchFavouritesList();
   favouritesList.push(imdbID);
   setFavouritesListToLocalStorage(favouritesList);
 }
 
+// Function for Removing Movie From Favourites list
 async function removeFromFavouriteList(imdbID) {
   let favouritesList = await fetchFavouritesList();
   favouritesList = favouritesList.filter((item) => item !== imdbID);
   setFavouritesListToLocalStorage(favouritesList);
 }
 
+// Function for Storing the Favourites list into local storage
 function setFavouritesListToLocalStorage(favouritesList) {
   localStorage.setItem('favouritesList', favouritesList.toString());
 }
 
+//Function for showing Spinner
 function showSpinner() {
   let spinner = document.createElement('div');
   spinner.classList.add('spinner', 'spinner-border');
@@ -452,6 +457,7 @@ function showSpinner() {
   moviesDisplayContainer.appendChild(spinner);
 }
 
+//Function for Hiding Spinner
 function hideSpinner() {
   let spinner = document.querySelector('.spinner');
   if(spinner) {

@@ -1,26 +1,34 @@
+//Fetching Movie Id from storage 
 let movie = sessionStorage.getItem('movieIdToShowDetails');
-// alert(movie);
+
+
 if(Boolean(movie)) {
   document.getElementsByClassName('movieCard')[0].style.display = 'none'
-let url = `https://omdbapi.com/?i=${movie}&apikey=a9a1037a`
-fetch(url).then(response => response.json()).then(data => {
-  console.log(data);
-//   document.getElementById('movieDetailsDisplay').style.display = 'flex';
-//   document.getElementById('loader').innerText = '';
-//   document.getElementById('loader').display = 'none';
-//   document.getElementById('loader').style.height = '0px';
+  fetchMovieDetails(movie);
+} else {
+  alert('Unable to fetch Data');
+    window.location('index.html');
+}
+
+async function fetchMovieDetails(movie) {
+  let url = `https://omdbapi.com/?i=${movie}&apikey=a9a1037a`
+  await fetch(url).then(response => response.json()).then(data => {
 
   if (data.Response === 'True') {
+    //Setting the Movie data if Response is true
     setMovieData(data);
+
+    //Removing the spinner and Showing the Movie Details Card
     document.getElementsByClassName('spinner')[0].style.display = 'none'
     document.getElementsByClassName('movieCard')[0].style.display = 'flex'
   } else {
-    alert('Unable to fetch Data');
+    alert('Unable to fetch Data, Plase Go Back');
     window.location('index.html');
   }
 })
 }
 
+//Setting the Movie Details into the Dom
 function setMovieData(data) {
   let imageContainer = document.getElementById('movieImage-container');
   if (data.Poster === "N/A") {
