@@ -40,7 +40,7 @@ movieSearchInput.addEventListener("input", (e) => {
 //function for handle the movie search
 async function handleMovieSearch(movieName) {
   let movieList = await searchMovie(movieName);
-  console.log(movieList);
+  // console.log(movieList);
 
   //Resetting the table for every Search
   searchResultDisplay.textContent = "";
@@ -80,8 +80,6 @@ async function createSearchResultMovieCard(movieData) {
   let tr = document.createElement("tr");
   tr.setAttribute("id", movieData.imdbID);
   tr.addEventListener("click", (e) => {
-    // showMoviePage(e, data[i].imdbID);
-    console.log('row clicked');
     showMovieDetails(movieData.imdbID);
   });
 
@@ -131,12 +129,9 @@ async function createSearchResultMovieFavouriteButton(imdbID, movieDetails) {
   }
 
   favoriteButton.addEventListener('click', (e) => {
-    console.log(e);
-
     //fetching the image name
     let imageName = e.target.src.split('/');
     imageName = imageName[imageName.length - 1];
-    // console.log(imageName); 
 
     //depend on name add/remove from the list and changing image sources
     if (imageName === "add-to-favourite.png") {
@@ -148,7 +143,7 @@ async function createSearchResultMovieFavouriteButton(imdbID, movieDetails) {
       removeFromFavouriteList(imdbID);
       e.target.src = 'images/add-to-favourite.png';
       //Removing movie Into Favourites Page 
-      (displayedScreen === 'favouritesPage') && console.log(document.querySelector(`div#${imdbID}`).remove());
+      (displayedScreen === 'favouritesPage') && document.querySelector(`div#${imdbID}`).remove();
     }
     e.stopPropagation();
     e.cancelable = true; //for IE browser
@@ -181,11 +176,12 @@ async function fetchPopularMovies() {
 	.then(response => result = response.results)
 	.catch(err => console.error(err));
   // console.log(result);
+  
   let popularMovieIds = [];
   for(let i = 0; i < result.length; i++) {
     popularMovieIds.push(result[i].imdb_id);
   }
-  // console.log('popular', popularMovieIds);
+
   return popularMovieIds;
 }
 
@@ -203,12 +199,10 @@ homePageButton.addEventListener('click', () => {
 
 //Setting the Data into Home Page
 async function setHomePage() {
-  // console.log(popularMovieIds);
   document.querySelector('#movies-container').textContent = '';
   let start = Math.floor(Math.random() * 40);
 
   for (let i = start; i < start+8; i++) {
-    console.log(popularMovieIds[i]);
     let movieDetails = await fetchMovieDetails(popularMovieIds[i]);
     addMovieCardIntoDocument(movieDetails);
   }
@@ -220,8 +214,7 @@ async function setHomePage() {
 let showFavouriteMoviesButton = document.getElementById('showFavouriteMoviesButton');
 showFavouriteMoviesButton.addEventListener('click', () => {
   displayedScreen = 'favouritesPage';
-  console.log(displayedScreen);
-  // console.log('1')
+
   moviesDisplayContainer.textContent = '';
   showSpinner();
   setFavouritesMovies();
@@ -252,7 +245,6 @@ for(let i = 0; i < movieGenre.length; i++) {
 
 
     let result = await fetchMovieByGenere(genere);
-    // console.log(result);
     for(let i = 0; i < result.length; i++) {
       let movieDetails = await fetchMovieDetails(result[i]);
       addMovieCardIntoDocument(movieDetails);
@@ -277,24 +269,12 @@ async function fetchMovieByGenere(genere) {
 //-------------------------- Movie By Genere Feature - Functions ENDS -----------------
 
 // -------------------------ADDING Movies card into DOM Function -- STARTS -----------------
-function setMoviesIntoDocument(moviesList) {
-  document.querySelector('#movies-container').textContent = '';
-  console.log(moviesList);
-  hideSpinner();
-  for (let i = 0; i < moviesList.length; i++) {
-    addMovieCardIntoDocument(moviesList[i]);
-  }
-}
-
 function addMovieCardIntoDocument(movieDetails) {
-  // alert('abcdefgh');
   // console.log(movieDetails);
   let movieCard = createHomePageMovieCard(movieDetails.Poster);
     movieCard.setAttribute('id', movieDetails.imdbID);
-    console.log(movieCard);
 
     let movieDataContainer = createMovieDataContainer();
-    console.log(movieDataContainer);
 
     let movieCardData = createMovieCardData(movieDetails.Title, movieDetails.Released);
 
@@ -371,15 +351,16 @@ function createMovieCardButton(imdbID) {
 
   favouriteButton.addEventListener('click',(e) => {
     let alreadyInFavouritesList = isPresentInFavouritesList(e.target.id);
+    
     if(alreadyInFavouritesList) {
         removeFromFavouriteList(e.target.id);
+
+        //Removing From The Screen if Favourites page is being displayed
         if(displayedScreen === 'favouritesPage') {
           let buttonCotainer = e.target.parentElement;
-          // console.log(buttonCotainer.parentElement);
           let contentCotainer = buttonCotainer.parentElement;
           let movieCard = contentCotainer.parentElement;
           movieCard.remove();
-          console.log(movieCard);
         }
         e.target.textContent = 'ADD To Favourites';
     } else {
@@ -396,7 +377,6 @@ function createMovieCardButton(imdbID) {
 
 //--------------Function for setting Movie ids into storage for display Indivisual Movie Details ------------
 function showMovieDetails(imdbID) {
-  console.log(imdbID);
   sessionStorage.setItem('movieIdToShowDetails', `${imdbID}`);
   window.open('movieDetails.html');
 }
@@ -407,7 +387,6 @@ async function fetchMovieDetails(imdbID) {
   let url = `https://omdbapi.com/?i=${imdbID}&apikey=${OMDB_API_KEY_SECOND}`
   let result;
   await fetch(url).then(response => response.json()).then(data => {
-    console.log(data);
     result = data;
   })
   return result;

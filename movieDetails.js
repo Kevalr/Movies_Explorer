@@ -34,7 +34,7 @@ function setMovieData(data) {
   if (data.Poster === "N/A") {
     data.Poster = `no-image-found.jpeg`
   }
-  console.log(imageContainer);
+  
   imageContainer.style.backgroundImage = `url(${data.Poster})`;
 
   let title = document.getElementById('movieTitle');
