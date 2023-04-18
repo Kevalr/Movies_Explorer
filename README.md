@@ -1,6 +1,6 @@
-<h1>Movie-Manager</h1>
+<h1 style=" color:red;">Movie-Manager</h1>
 
-<p>Website link :- https://movie-manager-d7f63un34-kevalr.vercel.app/</p>
+<p>Live Link : https://movie-manager-d7f63un34-kevalr.vercel.app/</p>
 
 <p>It Is A Movies Searching App In Which You Can Perform Followings Functions :- <p>
 
