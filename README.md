@@ -1,4 +1,4 @@
-<h1 style=" color:red;">Movie-Manager</h1>
+<h1>Movie-Manager</h1>
 
 <p>Live Link : https://movie-manager-d7f63un34-kevalr.vercel.app/</p>
 
